@@ -1,96 +1,81 @@
-const API_KEY = "AIzaSyA2aoWzaxm-JQ8Uoirn_t1Xk4GiLH_4gGM";
+const input = document.getElementById("user-input");
+const sendBtn = document.getElementById("send-btn");
+const chatBox = document.getElementById("chat-box");
 
-async function sendMessage() {
+function addMessage(text, sender) {
+    const message = document.createElement("div");
 
-    const input = document.getElementById("user-input");
+    message.classList.add("message");
 
-    const chatBox = document.getElementById("chat-box");
+    if (sender === "user") {
+        message.classList.add("user-message");
+    } else {
+        message.classList.add("ai-message");
+    }
 
-    const text = input.value;
+    message.textContent = text;
 
-    if (text.trim() === "") return;
-
-    // USER MESSAGE
-
-    const userMessage = document.createElement("div");
-
-    userMessage.className = "message user";
-
-    userMessage.innerText = text;
-
-    chatBox.appendChild(userMessage);
-
-    // AI MESSAGE
-
-    const aiMessage = document.createElement("div");
-
-    aiMessage.className = "message ai";
-
-    aiMessage.innerText = "Thinking...";
-
-    chatBox.appendChild(aiMessage);
+    chatBox.appendChild(message);
 
     chatBox.scrollTop = chatBox.scrollHeight;
+}
 
-    input.value = "";
+async function generateResponse(text) {
+
+    const lower = text.toLowerCase();
+
+    if (lower.includes("hi") || lower.includes("hello")) {
+        return "Hello. I am A.H. AI.";
+    }
+
+    if (lower.includes("joke")) {
+        return "Why did the AI go to school? To improve its neural education.";
+    }
 
     try {
 
         const response = await fetch(
-            `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${API_KEY}`,
-            {
-                method: "POST",
-
-                headers: {
-                    "Content-Type": "application/json"
-                },
-
-                body: JSON.stringify({
-
-                    contents: [
-                        {
-                            parts: [
-                                {
-                                    text: text
-                                }
-                            ]
-                        }
-                    ]
-
-                })
-
-            }
+            `https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(text)}`
         );
 
         const data = await response.json();
 
-        const aiText =
-            data.candidates?.[0]?.content?.parts?.[0]?.text ||
-            "No response generated.";
+        if (data.extract) {
+            return data.extract;
+        } else {
+            return "No internet information found.";
+        }
 
-        aiMessage.innerText = aiText;
-
+    } catch (error) {
+        return "Web search failed.";
     }
-
-    catch (error) {
-
-        aiMessage.innerText =
-            "Error connecting to A.H. AI.";
-
-    }
-
 }
 
-// ENTER KEY SUPPORT
+async function sendMessage() {
 
-document
-.getElementById("user-input")
-.addEventListener("keypress", function(event) {
+    const userText = input.value.trim();
 
-    if (event.key === "Enter") {
+    if (!userText) return;
 
+    addMessage(userText, "user");
+
+    input.value = "";
+
+    addMessage("Searching...", "ai");
+
+    const messages = document.querySelectorAll(".ai-message");
+
+    const loadingMessage = messages[messages.length - 1];
+
+    const response = await generateResponse(userText);
+
+    loadingMessage.textContent = response;
+}
+
+sendBtn.addEventListener("click", sendMessage);
+
+input.addEventListener("keypress", function(e) {
+    if (e.key === "Enter") {
         sendMessage();
-
     }
-
 });

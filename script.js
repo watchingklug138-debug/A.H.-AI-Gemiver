@@ -1,4 +1,4 @@
-function talkToAI() {
+async function talkToAI() {
 
     let input = document.getElementById("userInput").value;
 
@@ -8,58 +8,66 @@ function talkToAI() {
 
     let chatBox = document.getElementById("chatBox");
 
+    // USER MESSAGE
+
     let userMessage = document.createElement("div");
     userMessage.classList.add("user-message");
     userMessage.innerText = input;
 
     chatBox.appendChild(userMessage);
 
-    let response = "";
+    // AI MESSAGE
 
-    let lowerInput = input.toLowerCase();
+    let aiMessage = document.createElement("div");
+    aiMessage.classList.add("ai-message");
+    aiMessage.innerText = "Thinking...";
 
-    if (lowerInput.includes("hello")) {
-        response = "Hello. I am A.H. AI.";
-    }
+    chatBox.appendChild(aiMessage);
 
-    else if (lowerInput.includes("who are you")) {
-        response = "I am A.H. AI, developed by GEMIVER AI GROUP.";
-    }
+    chatBox.scrollTop = chatBox.scrollHeight;
 
-    else if (lowerInput.includes("math")) {
-        response = "I specialize in mathematical calculations and logical reasoning.";
-    }
+    // GEMINI API
 
-    else if (lowerInput.includes("homework")) {
-        response = "I can assist with homework, explanations, and educational support.";
-    }
+    const API_KEY = "PASTE_YOUR_API_KEY_HERE";
 
-    else if (lowerInput.includes("write")) {
-        response = "I can generate stories, essays, scripts, and creative content.";
-    }
+    const response = await fetch(
+        "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=" + API_KEY,
+        {
+            method: "POST",
 
-    else if (lowerInput.includes("data")) {
-        response = "I can help analyze and organize structured information.";
-    }
+            headers: {
+                "Content-Type": "application/json"
+            },
 
-    else {
-        response = "Processing request: " + input;
-    }
+            body: JSON.stringify({
+                contents: [
+                    {
+                        parts: [
+                            {
+                                text: input
+                            }
+                        ]
+                    }
+                ]
+            })
+        }
+    );
 
-    setTimeout(() => {
+    const data = await response.json();
 
-        let aiMessage = document.createElement("div");
-        aiMessage.classList.add("ai-message");
-        aiMessage.innerText = response;
+    let aiResponse =
+        data.candidates?.[0]?.content?.parts?.[0]?.text ||
+        "No response generated.";
 
-        chatBox.appendChild(aiMessage);
+    aiMessage.innerText = aiResponse;
 
-        chatBox.scrollTop = chatBox.scrollHeight;
-
-    }, 500);
+    chatBox.scrollTop = chatBox.scrollHeight;
 
     document.getElementById("userInput").value = "";
 }
+
+// ENTER KEY SUPPORT
+
 document.getElementById("userInput").addEventListener("keypress", function(event) {
 
     if (event.key === "Enter") {

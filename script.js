@@ -60,3 +60,10 @@ function talkToAI() {
 
     document.getElementById("userInput").value = "";
 }
+document.getElementById("userInput").addEventListener("keypress", function(event) {
+
+    if (event.key === "Enter") {
+        talkToAI();
+    }
+
+});

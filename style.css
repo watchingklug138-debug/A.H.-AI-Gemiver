@@ -7,9 +7,38 @@ body {
 }
 
 h1 {
-    font-size: 50px;
+    font-size: 60px;
+    margin-bottom: 10px;
 }
 
 p {
+    font-size: 20px;
+    color: gray;
+}
+
+.chat-container {
+    margin-top: 40px;
+}
+
+input {
+    width: 300px;
+    padding: 12px;
+    border-radius: 10px;
+    border: none;
+    font-size: 16px;
+}
+
+button {
+    padding: 12px 20px;
+    border: none;
+    border-radius: 10px;
+    background-color: white;
+    color: black;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+#response {
+    margin-top: 40px;
     font-size: 20px;
 }

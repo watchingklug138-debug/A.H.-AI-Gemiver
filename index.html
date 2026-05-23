@@ -1,23 +1,50 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>A.H. AI</title>
+
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-    <h1>A.H. AI</h1>
-    <p>Your versatile AI assistant.</p>
+    <div class="container">
 
-    <div class="chat-container">
-        <input type="text" id="userInput" placeholder="Ask A.H. AI something...">
-        <button onclick="talkToAI()">Send</button>
+        <h1>A.H. AI</h1>
+
+        <p class="subtitle">
+            Developed by GEMIVER AI GROUP
+        </p>
+
+        <div class="chat-box" id="chatBox">
+
+            <div class="ai-message">
+                Hello. I am A.H. AI. How can I assist you today?
+            </div>
+
+        </div>
+
+        <div class="input-area">
+
+            <input
+                type="text"
+                id="userInput"
+                placeholder="Ask A.H. AI something..."
+            >
+
+            <button onclick="talkToAI()">
+                Send
+            </button>
+
+        </div>
+
     </div>
-
-    <div id="response"></div>
 
     <script src="script.js"></script>
 
 </body>
+
 </html>

@@ -28,7 +28,7 @@ async function talkToAI() {
 
     // GEMINI API
 
-    const API_KEY = "PASTE_YOUR_API_KEY_HERE";
+    const API_KEY = "AIzaSyBmnmIJbT1I4UVR3ODuuckSTDR2CnsDjls";
 
     const response = await fetch(
         "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=" + API_KEY,

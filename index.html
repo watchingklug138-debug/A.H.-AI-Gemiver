@@ -1,14 +1,7 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
-
-    <meta charset="UTF-8">
-
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
 
     <title>A.H. AI</title>
 
@@ -18,42 +11,69 @@
 
 <body>
 
-    <div class="container">
+<div class="sidebar">
 
-        <h1>A.H. AI</h1>
+    <h2>A.H. AI</h2>
 
-        <p class="subtitle">
-            Developed by GEMIVER AI GROUP
-        </p>
+    <button class="new-chat">
+        + New Chat
+    </button>
 
-        <div
-            class="chat-box"
-            id="chatBox"
-        >
+    <div class="modes">
 
-            <div class="ai-message">
-                Hello. I am A.H. AI. How can I assist you today?
-            </div>
+        <h3>STYLE</h3>
 
+        <button>Fast</button>
+        <button>Thinking</button>
+        <button>Pro</button>
+
+    </div>
+
+</div>
+
+<div class="main">
+
+    <div class="top-bar">
+
+        <div class="logo">
+            A.H. AI
         </div>
 
-        <div class="input-area">
-
-            <input
-                type="text"
-                id="userInput"
-                placeholder="Ask A.H. AI something..."
-            >
-
-            <button onclick="talkToAI()">
-                Send
-            </button>
-
+        <div class="status">
+            Online
         </div>
 
     </div>
 
-    <script src="script.js"></script>
+    <div class="welcome">
+
+        <h1>Hello.</h1>
+
+        <p>
+            Welcome to A.H. AI.
+        </p>
+
+    </div>
+
+    <div id="chat-box"></div>
+
+    <div class="input-area">
+
+        <input
+            type="text"
+            id="user-input"
+            placeholder="Message A.H. AI..."
+        >
+
+        <button onclick="sendMessage()">
+            Send
+        </button>
+
+    </div>
+
+</div>
+
+<script src="script.js"></script>
 
 </body>
 
